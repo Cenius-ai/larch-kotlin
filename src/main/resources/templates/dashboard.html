@@ -1,0 +1,47 @@
+<th:block th:replace="~{layout :: layout(~{::content}, ~{::scripts})}">
+<th:block th:fragment="content">
+    <section class="dashboard-hero">
+        <div class="container-fluid px-4 py-5">
+            <div class="row align-items-end">
+                <div class="col-lg-6">
+                    <p class="overline">Portfolio Overview</p>
+                    <h1 class="display-3 fw-bold">Your DeFi<br>Allocation</h1>
+                </div>
+                <div class="col-lg-6 text-lg-end mt-3 mt-lg-0">
+                    <p class="label-sm text-secondary mb-1">Total Portfolio Value</p>
+                    <p class="total-value" th:text="'$' + ${#numbers.formatDecimal(totalValue, 0, 'COMMA', 2, 'POINT')}">$0.00</p>
+                    <p class="label-sm text-secondary mt-2">
+                        <span th:text="${holdingCount}">0</span> holdings across
+                        <span th:text="${allocation.size()}">0</span> assets
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="allocation-section">
+        <div class="container-fluid px-4 py-4">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="chart-wrapper">
+                        <canvas id="allocationChart" aria-label="Portfolio allocation pie chart" role="img"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <h2 class="h4 mb-3">Breakdown</h2>
+                    <div class="allocation-list" id="allocationList">
+                        <th:block th:if="${allocation.empty}">
+                            <p class="text-secondary fst-italic">No holdings yet. <a href="/holdings/add">Add your first holding.</a></p>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script src="/static/js/chart.umd.min.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</th:block>
+</th:block>

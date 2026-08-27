@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-md" th:fragment="navbar">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="/">
+            <span class="brand-mark">&#9670;</span> Larch
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${page == 'dashboard' ? 'active' : ''}" href="/">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${page == 'holdings' ? 'active' : ''}" href="/holdings">Holdings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${page == 'add' ? 'active' : ''}" href="/holdings/add">Add Holding</a>
+                </li>
+            </ul>
+            <button class="btn btn-theme-toggle" id="themeToggle" type="button" title="Toggle light/dark theme" aria-label="Toggle theme">
+                <span class="theme-icon-light">&#9788;</span>
+                <span class="theme-icon-dark">&#9790;</span>
+            </button>
+        </div>
+    </div>
+</nav>

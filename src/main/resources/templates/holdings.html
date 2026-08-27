@@ -1,0 +1,59 @@
+<th:block th:replace="~{layout :: layout(~{::content}, ~{::scripts})}">
+<th:block th:fragment="content">
+    <div class="container-fluid px-4 py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="display-5 fw-bold mb-0">Holdings</h1>
+            <a href="/holdings/add" class="btn btn-accent">+ Add Holding</a>
+        </div>
+
+        <div class="total-bar mb-4">
+            <span class="total-label">Portfolio Value</span>
+            <span class="total-number" th:text="'$' + ${#numbers.formatDecimal(totalValue, 0, 'COMMA', 2, 'POINT')}">$0.00</span>
+        </div>
+
+        <div class="table-responsive" th:if="${!#lists.isEmpty(holdings)}">
+            <table class="holdings-table">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Symbol</th>
+                        <th>Quantity</th>
+                        <th>Price (USD)</th>
+                        <th>Value (USD)</th>
+                        <th>Purchase</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="holdingsBody">
+                    <tr th:each="h : ${holdings}" th:attr="data-id=${h.id}">
+                        <td><strong th:text="${h.name}">Bitcoin</strong></td>
+                        <td><span class="badge-symbol" th:text="${h.symbol}">BTC</span></td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(h.quantity, 0, 'COMMA', 2, 'POINT')}">1.25</td>
+                        <td class="text-end" th:text="'$' + ${#numbers.formatDecimal(h.currentPriceUsd, 0, 'COMMA', 2, 'POINT')}">$67,432.18</td>
+                        <td class="text-end fw-bold" th:text="'$' + ${#numbers.formatDecimal(h.valueUsd, 0, 'COMMA', 2, 'POINT')}">$83,953.06</td>
+                        <td>
+                            <span th:if="${h.purchaseDate != null}" th:text="${h.purchaseDate}">2024-01-15</span>
+                            <span th:unless="${h.purchaseDate != null}" class="text-secondary">&mdash;</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger delete-holding"
+                                    th:attr="data-id=${h.id}"
+                                    aria-label="Delete holding">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${#lists.isEmpty(holdings)}" class="empty-state">
+            <h3>No holdings yet</h3>
+            <p>Start tracking your crypto portfolio by adding your first holding.</p>
+            <a href="/holdings/add" class="btn btn-accent">+ Add Your First Holding</a>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="scripts">
+    <script src="/static/js/holdings.js"></script>
+</th:block>
+</th:block>
